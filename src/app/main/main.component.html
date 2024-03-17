@@ -1,1 +1,20 @@
-<p>main works!</p>
+<nz-layout style="height: 100vh; position: fixed; min-width: 100vw; background-color: black;">
+    <nz-content style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: calc(100% - 50px - 20vh);">
+      <div nz-row>
+        <div nz-col nzXs="24" nzSm="20" nzMd="16" nzLg="12" nzXl="8">
+          <p style="color: rgb(255, 255, 255); font-size: 50px; font-weight: bold; text-align: center;">
+            Escape Pursuit
+          </p>
+          <nz-card style="width: 90vw; margin: auto;">
+            <div style="display: flex; flex-direction: column; justify-content: space-between; height: 9vh;">
+              <div style="display: flex; flex-direction: column;">
+                <button nz-button nzType="primary" nzBlock (click)="auth.loginWithRedirect();">Log In</button>
+                <p></p>
+                <button nz-button nzType="default" nzBlock (click)="auth.loginWithRedirect();">Register</button>
+              </div>
+            </div>
+          </nz-card>
+        </div>
+      </div>
+    </nz-content>
+  </nz-layout>

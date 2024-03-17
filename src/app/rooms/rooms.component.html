@@ -1,0 +1,102 @@
+<nz-layout
+  style="
+    height: 100vh;
+    position: fixed;
+    min-width: 100vw;
+    background-color: black;
+  "
+>
+  <nz-header
+    style="
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    "
+  >
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      "
+    >
+      <button routerLink="/profile" nz-button nzType="default" style="padding: 0 10px">
+        Profile
+      </button>
+      <p style="color: white; font-size: 2vh; margin: 0">Lobbies</p>
+      <ng-container *ngIf="auth.isAuthenticated$ | async">
+        <button nz-button nzType="primary" style="padding: 0 10px" nzDanger (click)="auth.logout({ logoutParams: { returnTo: document.location.origin } })">
+          Log out
+        </button>
+      </ng-container>
+    </div>
+  </nz-header>
+  <nz-content
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 70vh;
+    "
+  >
+    <div nz-row>
+      <div nz-col nzXs="24" nzSm="20" nzMd="16" nzLg="12" nzXl="8">
+        <nz-card style="width: 90vw; margin: auto">
+          <nz-table
+            *ngIf="tableData.length > 0"
+            [nzData]="tableData"
+            [nzPageSize]="3"
+            #roomTable
+          >
+            <thead>
+              <tr>
+                <th>Lobby Name</th>
+                <th>Player Count</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let lobby of roomTable.data">
+                <td>{{ lobby.name }}</td>
+                <td>{{ lobby.players.length }} / 3</td>
+                <td>
+                  <button
+                    nz-button
+                    nzType="primary"
+                    [routerLink]="['/lobby', lobby.id]"
+                  >
+                    Join
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </nz-card>
+      </div>
+    </div>
+  </nz-content>
+  <nz-footer
+    style="
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+    "
+  >
+    <button
+      routerLink="/game-create"
+      nz-button
+      nzType="primary"
+      style="padding: 0 10px"
+      nzBlock
+    >
+      Create Lobby
+    </button>
+  </nz-footer>
+</nz-layout>

@@ -1,0 +1,99 @@
+<nz-layout
+  style="
+    height: 100vh;
+    position: fixed;
+    min-width: 100vw;
+    background-color: black;
+  "
+>
+  <nz-header
+    style="
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    "
+  >
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      "
+    > 
+      <p style="color: white; font-size: 2vh; margin: 0">Lobby Waiting Room</p>
+      <button
+        (click)="playerLeave()"
+        nz-button
+        nzType="primary"
+        style="padding: 0 10px"
+        nzDanger
+      >
+        Leave
+      </button>
+    </div>
+  </nz-header>
+  <nz-content
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 70 vh;
+    "
+  >
+    <div nz-row>
+      <div nz-col nzXs="24" nzSm="20" nzMd="16" nzLg="12" nzXl="8">
+        <nz-card style="width: 90vw; margin: auto">
+          <nz-table #lobbyTable [nzData]="players">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of lobbyTable.data">
+                <td>{{ data["user"]["name"] }}</td>
+                <td>
+                  {{ data["role"]
+                  }}{{
+                    (gameData["hostId"] || "") === data["userId"]
+                      ? " - Host"
+                      : ""
+                  }}
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </nz-card>
+      </div>
+    </div>
+  </nz-content>
+  <nz-footer
+    style="
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+    "
+  >
+  
+  
+  <button
+  *ngIf="host"
+  (click)="startGame()"
+  nz-button
+  nzType="primary"
+  style="padding: 0 10px"
+  nzBlock
+  >
+  Start Game
+  </button>
+
+  </nz-footer>
+</nz-layout>

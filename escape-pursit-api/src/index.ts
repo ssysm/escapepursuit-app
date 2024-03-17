@@ -1,17 +1,33 @@
 import { OpenAPIRouter } from "@cloudflare/itty-router-openapi";
-import { TaskCreate } from "./endpoints/taskCreate";
-import { TaskDelete } from "./endpoints/taskDelete";
-import { TaskFetch } from "./endpoints/taskFetch";
-import { TaskList } from "./endpoints/taskList";
+import { createCors } from 'itty-router';
+
+import { GameCreate } from 'endpoints/games/gameCreate';
+import { GameFetch } from 'endpoints/games/gameFetch';
+import { GameList } from 'endpoints/games/gameList';
+import { GameStart } from 'endpoints/games/gameStart';
+import { PlayerJoin } from 'endpoints/games/playerJoin';
+import { PlayerLeave } from 'endpoints/games/playerLeave';
+import { PlayerScan } from 'endpoints/games/playerScan';
+import { UserCallback } from 'endpoints/users/userCallback';
 
 export const router = OpenAPIRouter({
 	docs_url: "/",
 });
 
-router.get("/api/tasks/", TaskList);
-router.post("/api/tasks/", TaskCreate);
-router.get("/api/tasks/:taskSlug/", TaskFetch);
-router.delete("/api/tasks/:taskSlug/", TaskDelete);
+const { preflight, corsify } = createCors();
+
+
+router.all('*', preflight);
+
+router.post('/api/games', GameCreate);
+router.get('/api/games', GameList);
+router.get('/api/games/:id', GameFetch);
+router.post('/api/games/:id', GameStart);
+router.post('/api/games/:id/players', PlayerJoin);
+router.post('/api/games/:gameId/players/:caughtPlayerGameId/players', PlayerScan);
+router.post('/api/games/:gameId/players/:playerId', PlayerLeave);
+
+router.post('/api/users/callback', UserCallback);
 
 // 404 for everything else
 router.all("*", () =>
@@ -25,5 +41,7 @@ router.all("*", () =>
 );
 
 export default {
-	fetch: router.handle,
+	fetch: async (request, env, ctx) => {
+		return router.handle(request, env, ctx).then(corsify)
+	 },
 };

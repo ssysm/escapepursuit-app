@@ -1,0 +1,14 @@
+<nz-layout style="height: 100vh; position: fixed; min-width: 100vw; background-color: black;">
+    <nz-header style="width: 100%; max-width: 1200px; display: flex; justify-content: center; align-items: center;">
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <button routerLink="/rooms" nz-button nzType="primary" style="padding: 0 10px;" nzDanger >Quit</button>
+            <p style="color:white; font-size:2vh; margin: 0;"> Lobby Creation </p>
+        </div>
+    </nz-header>
+    <nz-content style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <input [(ngModel)]="lobby_name" type="text" style="text-align: center; vertical-align: middle; width: 80%; vertical-align: middle;" nz-input placeholder="input lobby name"/>
+    </nz-content>
+    <nz-footer>
+        <button (click)="create_game()" nz-button nzType="primary" style="padding: 0 10px;" nzBlock>Create</button>
+    </nz-footer>
+</nz-layout>
